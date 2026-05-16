@@ -8,13 +8,13 @@ rust-version = "1.77"
 
 [lib]
 name = "no_more_snobs_lib"
-crate-type = ["staticlib", "cdylib", "rlib"]
+crate-type = ["cdylib", "rlib"]
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri = { version = "2", features = ["image-png"] }
 tauri-plugin-shell = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
@@ -32,6 +32,6 @@ incremental = true
 [profile.release]
 panic = "abort"
 codegen-units = 1
-lto = true
+lto = "thin"
 opt-level = "s"
 strip = true
