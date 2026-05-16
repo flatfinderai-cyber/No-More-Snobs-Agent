@@ -9,8 +9,8 @@ on:
 
 jobs:
   build-macos:
-    name: macOS (Universal)
-    runs-on: macos-latest
+    name: macOS (x64)
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
 
@@ -22,13 +22,11 @@ jobs:
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
-        with:
-          targets: aarch64-apple-darwin,x86_64-apple-darwin
 
       - name: Install frontend deps
         run: npm ci
 
-      - name: Build Tauri app (macOS universal)
+      - name: Build Tauri app (macOS)
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +37,6 @@ jobs:
           APPLE_PASSWORD: ${{ secrets.APPLE_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         with:
-          args: '--target universal-apple-darwin'
           tagName: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
           releaseName: ${{ startsWith(github.ref, 'refs/tags/') && format('No More Snobs {0}', github.ref_name) || '' }}
           releaseDraft: ${{ startsWith(github.ref, 'refs/tags/') }}
@@ -50,7 +47,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: no-more-snobs-macos
-          path: src-tauri/target/universal-apple-darwin/release/bundle/dmg/*.dmg
+          path: src-tauri/target/release/bundle/dmg/*.dmg
           if-no-files-found: ignore
 
   build-windows:

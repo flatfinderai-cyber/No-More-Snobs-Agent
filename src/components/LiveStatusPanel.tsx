@@ -1,4 +1,4 @@
-import { Timer, Coins, Activity } from "@phosphor-icons/react";
+import { Timer, Coins, Pulse } from "@phosphor-icons/react";
 import { AgentStatus } from "../types";
 
 interface Props {
@@ -64,7 +64,7 @@ export default function LiveStatusPanel({ status }: Props) {
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-1.5 text-snobs-muted">
-            <Activity weight="duotone" size={14} />
+            <Pulse weight="duotone" size={14} />
             <span className="text-[10px] uppercase tracking-wider font-medium">Month</span>
           </div>
           <span className="text-sm font-semibold text-snobs-text">{formatTokens(status.tokenSpendMonth)}</span>
