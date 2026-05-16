@@ -1,0 +1,40 @@
+[package]
+name = "no-more-snobs"
+version = "1.0.0"
+description = "No More Snobs — one person's answer to pretentious, overly convoluted waste of time."
+authors = ["Lila Olufemi Abegunrin"]
+edition = "2021"
+rust-version = "1.77"
+
+[lib]
+name = "no_more_snobs_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon", "image-png"] }
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+anyhow = "1"
+dirs = "5"
+keyring = "3"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1", features = ["v4"] }
+reqwest = { version = "0.12", features = ["json", "rustls-tls"], default-features = false }
+
+[target.'cfg(target_os = "macos")'.dependencies]
+security-framework = "2"
+
+[profile.dev]
+incremental = true
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = true
